@@ -1,10 +1,17 @@
 import 'package:donut_shop/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'widgets.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: SplashPage(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => DonutBottomBarSelectionService())
+    ],
+    child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SplashPage(),
+    ),
   ));
 }
 
