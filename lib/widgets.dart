@@ -76,26 +76,35 @@ class DonutBottomBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
+                icon: Icon(Icons.trip_origin,
+                    color: bottomBarSelectionService.tabSelection == 'main'
+                        ? Utils.mainDark
+                        : Utils.mainColor),
                 onPressed: () {
                   bottomBarSelectionService.setTabSelection('main');
                 },
-                icon: Icon(Icons.trip_origin,
-                    color: bottomBarSelectionService.tabSelection == 'main'
-                        ? Utils.mainColor
+              ),
+              IconButton(
+                icon: Icon(Icons.favorite,
+                    color: bottomBarSelectionService.tabSelection == 'favorites'
+                        ? Utils.mainDark
                         : Utils.mainColor),
-              ),
-              IconButton(
                 onPressed: () {
-                  bottomBarSelectionService.setTabSelection('favorite');
+                  bottomBarSelectionService.setTabSelection('favorites');
                 },
-                icon: const Icon(Icons.favorite, color: Utils.mainColor),
               ),
               IconButton(
+                icon: Icon(
+                  Icons.shopping_cart,
+                  color:
+                      bottomBarSelectionService.tabSelection == 'shoppingcart'
+                          ? Utils.mainDark
+                          : Utils.mainColor,
+                ),
                 onPressed: () {
                   bottomBarSelectionService.setTabSelection('shoppingcart');
                 },
-                icon: const Icon(Icons.shopping_cart, color: Utils.mainColor),
-              )
+              ),
             ],
           );
         },

@@ -6,7 +6,9 @@ import 'widgets.dart';
 void main() {
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => DonutBottomBarSelectionService())
+      ChangeNotifierProvider(
+        create: (_) => DonutBottomBarSelectionService(),
+      )
     ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -45,7 +47,10 @@ class _SplashPageState extends State<SplashPage>
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 10), () {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => DonutShopMain()));
+        MaterialPageRoute(
+          builder: (context) => DonutShopMain(),
+        ),
+      );
     });
     return Scaffold(
       backgroundColor: Utils.mainColor,
