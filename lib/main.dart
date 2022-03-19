@@ -6,22 +6,24 @@ import 'package:provider/provider.dart';
 import 'widgets.dart';
 
 void main() {
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
-        create: (_) => DonutBottomBarSelectionService(),
-      )
-    ],
-    child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      navigatorKey: Utils.mainAppNav,
-      routes: {
-        '/': (context) => const SplashPage(),
-        '/main': (context) => const DonutShopMain()
-      },
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => DonutBottomBarSelectionService(),
+        )
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        navigatorKey: Utils.mainAppNav,
+        routes: {
+          '/': (context) => const SplashPage(),
+          '/main': (context) => const DonutShopMain()
+        },
+      ),
     ),
-  ));
+  );
 }
 
 class SplashPage extends StatefulWidget {
