@@ -116,6 +116,7 @@ class DonutBottomBar extends StatelessWidget {
 class DonutBottomBarSelectionService extends ChangeNotifier {
   String? tabSelection = 'main';
   void setTabSelection(String selection) {
+    tabSelection = selection;
     notifyListeners();
   }
 }
