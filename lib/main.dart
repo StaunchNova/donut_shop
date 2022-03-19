@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:donut_shop/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,12 +14,19 @@ void main() {
     ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+      initialRoute: '/',
+      navigatorKey: Utils.mainAppNav,
+      routes: {
+        '/': (context) => const SplashPage(),
+        '/main': (context) => const DonutShopMain()
+      },
     ),
   ));
 }
 
 class SplashPage extends StatefulWidget {
+  const SplashPage({Key? key}) : super(key: key);
+
   @override
   State<SplashPage> createState() => _SplashPageState();
 }
@@ -80,6 +89,9 @@ class _SplashPageState extends State<SplashPage>
 }
 
 class Utils {
+  static GlobalKey<NavigatorState> mainListNav = GlobalKey();
+  static GlobalKey<NavigatorState> mainAppNav = GlobalKey();
+
   static const Color mainColor = Color(0xFFFF0F7E);
   static const Color mainDark = Color(0xFF980346);
   static const String donutLogoWhiteNoText =
