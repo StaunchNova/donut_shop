@@ -25,7 +25,10 @@ class DonutShopMain extends StatelessWidget {
         body: Column(
           children: [
             Expanded(
-              child: Container(),
+              child: Navigator(
+                key: Utils.mainListNav,
+                initialRoute: '/main',
+              ),
             ),
             const DonutBottomBar(),
           ],
