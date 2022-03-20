@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:donut_shop/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,11 +55,7 @@ class _SplashPageState extends State<SplashPage>
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 10), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => DonutShopMain(),
-        ),
-      );
+      Utils.mainAppNav.currentState!.pushReplacementNamed('/main');
     });
     return Scaffold(
       backgroundColor: Utils.mainColor,
