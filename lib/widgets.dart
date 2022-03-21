@@ -28,6 +28,26 @@ class DonutShopMain extends StatelessWidget {
               child: Navigator(
                 key: Utils.mainListNav,
                 initialRoute: '/main',
+                onGenerateRoute: (RouteSettings settings) {
+                  Widget page;
+                  switch (settings.name) {
+                    case '/main':
+                      page = const Center(child: Text('main'));
+                      break;
+                    case '/favorites':
+                      page = const Center(child: Text('shopping cart'));
+                      break;
+                    case '/shoppingcart':
+                      page = const Center(child: Text('shopping cart'));
+                      break;
+                    default:
+                      page = const Center(child: Text('main'));
+                      break;
+                  }
+                  return PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => page,
+                      transitionDuration: const Duration(seconds: 0));
+                },
               ),
             ),
             const DonutBottomBar(),
@@ -119,6 +139,7 @@ class DonutBottomBar extends StatelessWidget {
 class DonutBottomBarSelectionService extends ChangeNotifier {
   String? tabSelection = 'main';
   void setTabSelection(String selection) {
+    Utils.mainListNav.currentState!.pushReplacementNamed('/' + selection);
     tabSelection = selection;
     notifyListeners();
   }
