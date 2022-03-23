@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,7 @@ class DonutShopMain extends StatelessWidget {
                   Widget page;
                   switch (settings.name) {
                     case '/main':
-                      page = const Center(child: Text('main'));
+                      page = const DonutMainPage();
                       break;
                     case '/favorites':
                       page = const Center(child: Text('shopping cart'));
@@ -53,6 +54,17 @@ class DonutShopMain extends StatelessWidget {
             const DonutBottomBar(),
           ],
         ));
+  }
+}
+
+class DonutMainPage extends StatelessWidget {
+  const DonutMainPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: const [DonutPager()],
+    );
   }
 }
 
@@ -143,4 +155,76 @@ class DonutBottomBarSelectionService extends ChangeNotifier {
     tabSelection = selection;
     notifyListeners();
   }
+}
+
+class DonutPager extends StatefulWidget {
+  const DonutPager({Key? key}) : super(key: key);
+
+  @override
+  State<DonutPager> createState() => _DonutPagerState();
+}
+
+class _DonutPagerState extends State<DonutPager> {
+  List<DonutPage> pages = [
+    DonutPage(imgUrl: Utils.donutPromo1, logoImgUrl: Utils.donutLogoWhiteText),
+    DonutPage(imgUrl: Utils.donutPromo2, logoImgUrl: Utils.donutLogoWhiteText),
+    DonutPage(imgUrl: Utils.donutPromo3, logoImgUrl: Utils.donutLogoRedText),
+  ];
+  int currentPage = 0;
+  PageController? controller;
+  @override
+  void initState() {
+    controller = PageController(initialPage: 0);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller!.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 350,
+      child: Column(
+        children: [
+          Expanded(
+            child: PageView(
+              scrollDirection: Axis.horizontal,
+              pageSnapping: true,
+              controller: controller,
+              children: List.generate(pages.length, (index) {
+                DonutPage currentPage = pages[index];
+                return Container(
+                  alignment: Alignment.bottomLeft,
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0.0, 5.0))
+                    ],
+                    image: DecorationImage(
+                        image: NetworkImage(currentPage.imgUrl!),
+                        fit: BoxFit.cover),
+                  ),
+                );
+              }),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class DonutPage {
+  String? imgUrl;
+  String? logoImgUrl;
+  DonutPage({this.imgUrl, this.logoImgUrl});
 }
