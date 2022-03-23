@@ -213,6 +213,10 @@ class _DonutPagerState extends State<DonutPager> {
                         image: NetworkImage(currentPage.imgUrl!),
                         fit: BoxFit.cover),
                   ),
+                  child: Image.network(
+                    currentPage.logoImgUrl!,
+                    width: 120,
+                  ),
                 );
               }),
             ),
