@@ -352,6 +352,21 @@ class DonutFilterBar extends StatelessWidget {
   }
 }
 
+class DonutList extends StatefulWidget {
+  List<DonutModel>? donuts;
+  DonutList({this.donuts});
+
+  @override
+  State<DonutList> createState() => _DonutListState();
+}
+
+class _DonutListState extends State<DonutList> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 class DonutPage {
   String? imgUrl;
   String? logoImgUrl;
