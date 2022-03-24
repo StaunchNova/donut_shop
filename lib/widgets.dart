@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
 
@@ -63,7 +64,10 @@ class DonutMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [DonutPager()],
+      children: const [
+        DonutPager(),
+        DonutFilterBar(),
+      ],
     );
   }
 }
@@ -275,8 +279,106 @@ class PageViewIndicator extends StatelessWidget {
   }
 }
 
+class DonutFilterBar extends StatelessWidget {
+  const DonutFilterBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Alignment alignmentBasedOnTap(filterBarId) {
+      switch (filterBarId) {
+        case 'classic':
+          return Alignment.centerLeft;
+        case 'sprinkled':
+          return Alignment.center;
+        case 'stuffed':
+          return Alignment.centerRight;
+        default:
+          return Alignment.centerLeft;
+      }
+    }
+
+    return Padding(
+        padding: const EdgeInsets.all(20),
+        child: Consumer<DonutService>(
+          builder: (context, donutService, child) {
+            return Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(donutService.filterBarItems.length,
+                      (index) {
+                    DonutFilterBarItem item =
+                        donutService.filterBarItems[index];
+                    return GestureDetector(
+                      onTap: () {
+                        donutService.filteredDonutsByType(item.id!);
+                      },
+                      child: Text(
+                        item.label!,
+                        style: TextStyle(
+                            color: donutService.selectedDonutType == item.id
+                                ? Utils.mainColor
+                                : Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  }),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Stack(
+                  children: [
+                    AnimatedAlign(
+                      alignment:
+                          alignmentBasedOnTap(donutService.selectedDonutType),
+                      duration: const Duration(
+                        milliseconds: 250,
+                      ),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 3 - 20,
+                        height: 5,
+                        decoration: BoxDecoration(
+                            color: Utils.mainColor,
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            );
+          },
+        ));
+  }
+}
+
 class DonutPage {
   String? imgUrl;
   String? logoImgUrl;
   DonutPage({this.imgUrl, this.logoImgUrl});
+}
+
+class DonutFilterBarItem {
+  String? id;
+  String? label;
+  DonutFilterBarItem({
+    this.id,
+    this.label,
+  });
+}
+
+class DonutService extends ChangeNotifier {
+  List<DonutFilterBarItem> filterBarItems = [
+    DonutFilterBarItem(id: 'classic', label: 'Classic'),
+    DonutFilterBarItem(id: 'sprinkled', label: 'Sprinkled'),
+    DonutFilterBarItem(id: 'stuffed', label: 'Stuffed')
+  ];
+  String? selectedDonutType;
+  DonutService() {
+    selectedDonutType = filterBarItems.first.id;
+  }
+  void filteredDonutsByType(String type) {
+    selectedDonutType = type;
+    notifyListeners();
+  }
 }

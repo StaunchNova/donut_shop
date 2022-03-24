@@ -9,6 +9,9 @@ void main() {
       providers: [
         ChangeNotifierProvider(
           create: (_) => DonutBottomBarSelectionService(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DonutService(),
         )
       ],
       child: MaterialApp(
