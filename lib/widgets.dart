@@ -412,8 +412,15 @@ class DonutCard extends StatelessWidget {
                   color: Utils.mainColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                padding:
-                    EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                padding: const EdgeInsets.only(
+                    left: 10, right: 10, top: 5, bottom: 5),
+                child: Text(
+                  '\$${donutInfo!.price!.toStringAsFixed(2)}',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
               )
             ],
           ),
