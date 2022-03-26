@@ -370,6 +370,51 @@ class _DonutListState extends State<DonutList> {
   }
 }
 
+class DonutCard extends StatelessWidget {
+  DonutModel? donutInfo;
+  DonutCard({this.donutInfo});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          width: 150,
+          alignment: Alignment.bottomLeft,
+          margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.5),
+                  blurRadius: 10,
+                  offset: const Offset(0.0, 4.0),
+                ),
+              ]),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${donutInfo!.name}',
+                style: const TextStyle(
+                    color: Utils.mainDark,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+
 class DonutPage {
   String? imgUrl;
   String? logoImgUrl;
