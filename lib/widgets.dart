@@ -407,6 +407,14 @@ class DonutCard extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Utils.mainColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+              )
             ],
           ),
         )
