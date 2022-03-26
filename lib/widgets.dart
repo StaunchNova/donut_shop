@@ -64,9 +64,13 @@ class DonutMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        DonutPager(),
-        DonutFilterBar(),
+      children: [
+        const DonutPager(),
+        const DonutFilterBar(),
+        Expanded(
+            child: DonutList(
+          donuts: Utils.donuts,
+        ))
       ],
     );
   }
@@ -365,7 +369,12 @@ class _DonutListState extends State<DonutList> {
   Widget build(BuildContext context) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemBuilder: (BuildContext context, int index) {},
+      itemBuilder: (BuildContext context, int index) {
+        DonutModel currentDonut = widget.donuts![index];
+        return DonutCard(
+          donutInfo: currentDonut,
+        );
+      },
     );
   }
 }
