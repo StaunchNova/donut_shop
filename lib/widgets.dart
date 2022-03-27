@@ -68,9 +68,15 @@ class DonutMainPage extends StatelessWidget {
         const DonutPager(),
         const DonutFilterBar(),
         Expanded(
-            child: DonutList(
-          donuts: Utils.donuts,
-        ))
+          child: Consumer<DonutService>(
+            builder: (context, donutService, child) {
+              return DonutList(donuts: donutService.filteredDonuts);
+            },
+            // child: DonutList(
+            //   donuts: Utils.donuts,
+            // ),
+          ),
+        )
       ],
     );
   }
@@ -473,11 +479,15 @@ class DonutService extends ChangeNotifier {
     DonutFilterBarItem(id: 'stuffed', label: 'Stuffed')
   ];
   String? selectedDonutType;
+  List<DonutModel> filteredDonuts = [];
   DonutService() {
     selectedDonutType = filterBarItems.first.id;
+    filteredDonutsByType(selectedDonutType!);
   }
   void filteredDonutsByType(String type) {
     selectedDonutType = type;
+    filteredDonuts =
+        Utils.donuts.where((d) => d.type == selectedDonutType).toList();
     notifyListeners();
   }
 }
