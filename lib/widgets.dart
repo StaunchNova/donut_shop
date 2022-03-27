@@ -111,7 +111,8 @@ class DonutBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(30),
+      color: Colors.black,
+      padding: const EdgeInsets.all(10),
       child: Consumer<DonutBottomBarSelectionService>(
         builder: (context, bottomBarSelectionService, child) {
           return Row(
@@ -195,7 +196,7 @@ class _DonutPagerState extends State<DonutPager> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 350,
+      height: 300,
       child: Column(
         children: [
           Expanded(
@@ -268,7 +269,8 @@ class PageViewIndicator extends StatelessWidget {
             child: Container(
               width: 15,
               height: 15,
-              margin: const EdgeInsets.all(10),
+              margin:
+                  const EdgeInsets.only(top: 0, bottom: 5, left: 10, right: 10),
               decoration: BoxDecoration(
                 color: currentPage == index
                     ? Utils.mainColor
@@ -369,7 +371,7 @@ class _DonutListState extends State<DonutList> {
   Widget build(BuildContext context) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemBuilder: (BuildContext context, int index) {
+      itemBuilder: (context, index) {
         DonutModel currentDonut = widget.donuts![index];
         return DonutCard(
           donutInfo: currentDonut,
@@ -390,6 +392,7 @@ class DonutCard extends StatelessWidget {
       children: [
         Container(
           width: 150,
+          padding: const EdgeInsets.all(15),
           alignment: Alignment.bottomLeft,
           margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
           decoration: BoxDecoration(
@@ -432,6 +435,15 @@ class DonutCard extends StatelessWidget {
                 ),
               )
             ],
+          ),
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: Image.network(
+            donutInfo!.imgUrl!,
+            width: 150,
+            height: 150,
+            fit: BoxFit.contain,
           ),
         )
       ],
