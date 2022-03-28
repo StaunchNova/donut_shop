@@ -117,7 +117,7 @@ class DonutBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      // color: Colors.black,
       padding: const EdgeInsets.all(10),
       child: Consumer<DonutBottomBarSelectionService>(
         builder: (context, bottomBarSelectionService, child) {
@@ -373,14 +373,37 @@ class DonutList extends StatefulWidget {
 }
 
 class _DonutListState extends State<DonutList> {
+  final GlobalKey<AnimatedListState> _key = GlobalKey();
+  List<DonutModel> insertedItems = [];
+  @override
+  void initState() {
+    super.initState();
+
+    var future = Future(() {});
+    for (var i = 0; i < widget.donuts!.length; i++) {
+      future = future.then((_) {
+        return Future.delayed(const Duration(milliseconds: 125), () {
+          insertedItems.add(widget.donuts![i]);
+          _key.currentState!.insertItem(i);
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return AnimatedList(
       scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) {
+      initialItemCount: insertedItems.length,
+      itemBuilder: (context, index, animation) {
         DonutModel currentDonut = widget.donuts![index];
-        return DonutCard(
-          donutInfo: currentDonut,
+        return FadeTransition(
+          opacity: Tween(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          ),
+          child: DonutCard(
+            donutInfo: currentDonut,
+          ),
         );
       },
     );
