@@ -514,8 +514,10 @@ class DonutShopDetails extends StatefulWidget {
 }
 
 class _DonutShopDetailsState extends State<DonutShopDetails> {
+  DonutModel? selectedDonut;
   @override
   Widget build(BuildContext context) {
+    selectedDonut = Utils.donuts[0];
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Utils.mainDark),
@@ -529,7 +531,25 @@ class _DonutShopDetailsState extends State<DonutShopDetails> {
         ),
       ),
       body: Column(
-        children: [Container(), Expanded(child: Column())],
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height / 2,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: -40,
+                  right: -120,
+                  child: Image.network(
+                    selectedDonut!.imgUrl!,
+                    width: MediaQuery.of(context).size.width * 1.25,
+                    fit: BoxFit.contain,
+                  ),
+                )
+              ],
+            ),
+          ),
+          Expanded(child: Column())
+        ],
       ),
     );
   }
