@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:donut_shop/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +21,8 @@ void main() {
         initialRoute: '/',
         navigatorKey: Utils.mainAppNav,
         routes: {
-          '/': (context) => const SplashPage(),
+          // '/': (context) => const SplashPage(),
+          '/': (context) => const DonutShopDetails(),
           '/main': (context) => const DonutShopMain()
         },
       ),
