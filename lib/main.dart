@@ -19,9 +19,9 @@ void main() {
         initialRoute: '/',
         navigatorKey: Utils.mainAppNav,
         routes: {
-          // '/': (context) => const SplashPage(),
-          '/': (context) => const DonutShopDetails(),
-          '/main': (context) => const DonutShopMain()
+          '/': (context) => const SplashPage(),
+          '/main': (context) => const DonutShopMain(),
+          '/details': (context) => const DonutShopDetails(),
         },
       ),
     ),
