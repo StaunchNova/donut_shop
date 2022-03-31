@@ -528,6 +528,9 @@ class _DonutShopDetailsState extends State<DonutShopDetails> {
           ),
         ),
       ),
+      body: Column(
+        children: [Container(), Expanded(child: Column())],
+      ),
     );
   }
 }
