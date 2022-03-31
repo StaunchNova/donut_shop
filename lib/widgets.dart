@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
@@ -518,6 +516,18 @@ class DonutShopDetails extends StatefulWidget {
 class _DonutShopDetailsState extends State<DonutShopDetails> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Utils.mainDark),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Center(
+          child: SizedBox(
+            width: 120,
+            child: Image.network(Utils.donutLogoRedText),
+          ),
+        ),
+      ),
+    );
   }
 }
