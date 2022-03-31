@@ -466,11 +466,14 @@ class DonutCard extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.topCenter,
-            child: Image.network(
-              donutInfo!.imgUrl!,
-              width: 150,
-              height: 150,
-              fit: BoxFit.contain,
+            child: Hero(
+              tag: donutInfo!.name!,
+              child: Image.network(
+                donutInfo!.imgUrl!,
+                width: 150,
+                height: 150,
+                fit: BoxFit.contain,
+              ),
             ),
           )
         ],
@@ -575,15 +578,18 @@ class _DonutShopDetailsState extends State<DonutShopDetails>
             height: MediaQuery.of(context).size.height / 2.1,
             child: Stack(
               children: [
-                Positioned(
-                  top: -60,
-                  right: -120,
-                  child: RotationTransition(
-                    turns: rotationAnimation!,
-                    child: Image.network(
-                      selectedDonut!.imgUrl!,
-                      width: MediaQuery.of(context).size.width * 1.25,
-                      fit: BoxFit.contain,
+                Hero(
+                  tag: selectedDonut!.name!,
+                  child: Positioned(
+                    top: -60,
+                    right: -120,
+                    child: RotationTransition(
+                      turns: rotationAnimation!,
+                      child: Image.network(
+                        selectedDonut!.imgUrl!,
+                        width: MediaQuery.of(context).size.width * 1.25,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                 )
