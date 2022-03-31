@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
@@ -532,12 +534,12 @@ class _DonutShopDetailsState extends State<DonutShopDetails> {
       ),
       body: Column(
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height / 2,
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 2.1,
             child: Stack(
               children: [
                 Positioned(
-                  top: -40,
+                  top: -60,
                   right: -120,
                   child: Image.network(
                     selectedDonut!.imgUrl!,
@@ -548,7 +550,74 @@ class _DonutShopDetailsState extends State<DonutShopDetails> {
               ],
             ),
           ),
-          Expanded(child: Column())
+          Expanded(
+              child: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        selectedDonut!.name!,
+                        style: const TextStyle(
+                            color: Utils.mainDark,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 50,
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.favorite_outline),
+                      color: Utils.mainDark,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  padding: const EdgeInsets.only(
+                      top: 10, bottom: 10, left: 20, right: 20),
+                  decoration: BoxDecoration(
+                    color: Utils.mainDark,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    '\$${selectedDonut!.price!.toStringAsFixed(2)}',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(selectedDonut!.description!),
+                Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 10, bottom: 10),
+                  decoration: BoxDecoration(
+                      color: Utils.mainDark.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.shopping_cart, color: Utils.mainDark),
+                      SizedBox(width: 20),
+                      Text(
+                        'Add To Cart',
+                        style: TextStyle(color: Utils.mainDark),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ))
         ],
       ),
     );
