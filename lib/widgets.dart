@@ -627,7 +627,7 @@ class _DonutShopDetailsState extends State<DonutShopDetails>
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 08),
                 Container(
                   padding: const EdgeInsets.only(
                       top: 10, bottom: 10, left: 20, right: 20),
@@ -674,7 +674,7 @@ class _DonutShopDetailsState extends State<DonutShopDetails>
                       );
                     }
                     return Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
@@ -835,7 +835,7 @@ class _DonutShoppingCartPageState extends State<DonutShoppingCartPage>
                 );
               }
               return DonutShoppingList(
-                dountcart: cartService.cartDonuts,
+                donutCart: cartService.cartDonuts,
                 cartService: cartService,
               );
             }),
@@ -978,26 +978,56 @@ class DonutShoppingListRow extends StatelessWidget {
 }
 
 class DonutShoppingList extends StatefulWidget {
-  List<DonutModel>? dountcart;
+  List<DonutModel>? donutCart;
+
   DonutShoppingCartService? cartService;
-  DonutShoppingList({this.dountcart, this.cartService});
+  DonutShoppingList({this.donutCart, this.cartService});
 
   @override
   State<DonutShoppingList> createState() => _DonutShoppingListState();
 }
 
 class _DonutShoppingListState extends State<DonutShoppingList> {
+  final GlobalKey<AnimatedListState> _key = GlobalKey();
+  List<DonutModel> insertedItems = [];
+  @override
+  void initState() {
+    super.initState();
+
+    var future = Future(() {});
+    for (var i = 0; i < widget.donutCart!.length; i++) {
+      future = future.then((_) {
+        return Future.delayed(const Duration(microseconds: 125), () {
+          insertedItems.add(widget.donutCart![i]);
+          _key.currentState!.insertItem(i);
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: widget.dountcart!.length,
-      itemBuilder: (context, index) {
-        DonutModel currentDonut = widget.dountcart![index];
-        return DonutShoppingListRow(
-          donut: currentDonut,
-          onDeleteRow: () {
-            widget.cartService!.removeFromCart(currentDonut);
-          },
+    return AnimatedList(
+      key: _key,
+      initialItemCount: insertedItems.length,
+      itemBuilder: (context, index, animation) {
+        DonutModel currentDonut = widget.donutCart![index];
+        return SlideTransition(
+          position: Tween(
+            begin: const Offset(0.0, 0.2),
+            end: const Offset(0.0, 0.0),
+          ).animate(
+              CurvedAnimation(parent: animation, curve: Curves.bounceInOut)),
+          child: FadeTransition(
+            opacity: Tween(begin: 0.0, end: 1.0).animate(
+                CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
+            child: DonutShoppingListRow(
+              donut: currentDonut,
+              onDeleteRow: () {
+                widget.cartService!.removeFromCart(currentDonut);
+              },
+            ),
+          ),
         );
       },
     );
