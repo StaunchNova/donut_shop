@@ -834,7 +834,10 @@ class _DonutShoppingCartPageState extends State<DonutShoppingCartPage>
                   ),
                 );
               }
-              return DonutShoppingListRow();
+              return DonutShoppingList(
+                dountcart: cartService.cartDonuts,
+                cartService: cartService,
+              );
             }),
           ),
         ],
@@ -895,7 +898,9 @@ class DonutShoppingListRow extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              onDeleteRow!();
+            },
             icon: const Icon(
               Icons.delete_forever,
               color: Utils.mainColor,
@@ -903,6 +908,33 @@ class DonutShoppingListRow extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class DonutShoppingList extends StatefulWidget {
+  List<DonutModel>? dountcart;
+  DonutShoppingCartService? cartService;
+  DonutShoppingList({this.dountcart, this.cartService});
+
+  @override
+  State<DonutShoppingList> createState() => _DonutShoppingListState();
+}
+
+class _DonutShoppingListState extends State<DonutShoppingList> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: widget.dountcart!.length,
+      itemBuilder: (context, index) {
+        DonutModel currentDonut = widget.dountcart![index];
+        return DonutShoppingListRow(
+          donut: currentDonut,
+          onDeleteRow: () {
+            widget.cartService!.removeFromCart(currentDonut);
+          },
+        );
+      },
     );
   }
 }
