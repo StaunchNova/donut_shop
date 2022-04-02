@@ -810,7 +810,27 @@ class _DonutShoppingCartPageState extends State<DonutShoppingCartPage>
               Utils.donutTitleMyDonuts,
               width: 170,
             ),
-          )
+          ),
+          Expanded(
+            child: Center(
+              child: SizedBox(
+                width: 200,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.shopping_cart,
+                        color: Colors.grey[300], size: 50),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'You don\'t have any items on your cart yet! ',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.grey),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
