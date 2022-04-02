@@ -571,6 +571,9 @@ class _DonutShopDetailsState extends State<DonutShopDetails>
             child: Image.network(Utils.donutLogoRedText),
           ),
         ),
+        actions: const [
+          DonutShoppingCartBadge(),
+        ],
       ),
       body: Column(
         children: [
@@ -671,7 +674,7 @@ class _DonutShopDetailsState extends State<DonutShopDetails>
                       );
                     }
                     return Padding(
-                      padding: const EdgeInsets.only(top: 30, bottom: 30),
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
@@ -724,5 +727,46 @@ class DonutShoppingCartService extends ChangeNotifier {
 
   bool isDonutInCart(DonutModel donut) {
     return cartDonuts.any((d) => d.name == donut.name);
+  }
+}
+
+class DonutShoppingCartBadge extends StatelessWidget {
+  const DonutShoppingCartBadge({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<DonutShoppingCartService>(
+      builder: (context, cartService, child) {
+        if (cartService.cartDonuts.isEmpty) {
+          return const SizedBox();
+        }
+        return Transform.scale(
+          scale: 0.7,
+          child: Container(
+            margin: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            decoration: BoxDecoration(
+              color: Utils.mainColor,
+              borderRadius: BorderRadius.circular(40),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  '${cartService.cartDonuts.length}',
+                  style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                const Icon(Icons.shopping_cart, size: 25, color: Colors.white)
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }
