@@ -812,23 +812,93 @@ class _DonutShoppingCartPageState extends State<DonutShoppingCartPage>
             ),
           ),
           Expanded(
-            child: Center(
-              child: SizedBox(
-                width: 200,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.shopping_cart,
-                        color: Colors.grey[300], size: 50),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'You don\'t have any items on your cart yet! ',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey),
-                    )
-                  ],
+            child: Consumer<DonutShoppingCartService>(
+                builder: (context, cartService, child) {
+              if (cartService.cartDonuts.isEmpty) {
+                return Center(
+                  child: SizedBox(
+                    width: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.shopping_cart,
+                            color: Colors.grey[300], size: 50),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'You don\'t have any items on your cart yet! ',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.grey),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              }
+              return DonutShoppingListRow();
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DonutShoppingListRow extends StatelessWidget {
+  DonutModel? donut;
+  Function? onDeleteRow;
+  DonutShoppingListRow({
+    this.onDeleteRow,
+    this.donut,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, bottom: 10, right: 20),
+      child: Row(
+        children: [
+          Image.network('${donut!.imgUrl}', width: 80, height: 80),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${donut!.name}',
+                  style: const TextStyle(
+                      color: Utils.mainDark,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
                 ),
-              ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(
+                      top: 5, bottom: 5, left: 10, right: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      width: 2,
+                      color: Utils.mainDark.withOpacity(0.2),
+                    ),
+                  ),
+                  child: Text(
+                    '\$${donut!.price!.toStringAsFixed(2)}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Utils.mainDark.withOpacity(0.4)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 10),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.delete_forever,
+              color: Utils.mainColor,
             ),
           ),
         ],
