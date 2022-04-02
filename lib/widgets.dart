@@ -846,6 +846,24 @@ class _DonutShoppingCartPageState extends State<DonutShoppingCartPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  cartService.cartDonuts.isEmpty
+                      ? const SizedBox()
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Total',
+                              style: TextStyle(color: Utils.mainDark),
+                            ),
+                            Text(
+                              '\$${cartService.getTotal().toStringAsFixed(2)}',
+                              style: const TextStyle(
+                                  color: Utils.mainDark,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30),
+                            ),
+                          ],
+                        ),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: Material(
