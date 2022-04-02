@@ -40,7 +40,7 @@ class DonutShopMain extends StatelessWidget {
                       page = const Center(child: Text('shopping cart'));
                       break;
                     case '/shoppingcart':
-                      page = const Center(child: Text('shopping cart'));
+                      page = const DonutShoppingCartPage();
                       break;
                     default:
                       page = const Center(child: Text('main'));
@@ -767,6 +767,52 @@ class DonutShoppingCartBadge extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class DonutShoppingCartPage extends StatefulWidget {
+  const DonutShoppingCartPage({Key? key}) : super(key: key);
+
+  @override
+  State<DonutShoppingCartPage> createState() => _DonutShoppingCartPageState();
+}
+
+class _DonutShoppingCartPageState extends State<DonutShoppingCartPage>
+    with SingleTickerProviderStateMixin {
+  AnimationController? titleAnimation;
+  @override
+  void initState() {
+    super.initState();
+    titleAnimation = AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this)
+      ..forward();
+  }
+
+  @override
+  void dispose() {
+    titleAnimation!.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(40),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FadeTransition(
+            opacity: Tween(begin: 0.0, end: 1.0).animate(
+              CurvedAnimation(parent: titleAnimation!, curve: Curves.easeInOut),
+            ),
+            child: Image.network(
+              Utils.donutTitleMyDonuts,
+              width: 170,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
